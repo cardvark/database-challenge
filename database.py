@@ -59,6 +59,27 @@ with conn:
     cols = [desc[0] for desc in cur.description]
     df = pd.DataFrame(rows, columns=cols)
     
-    print df
+# print df
 
-    
+# print df['state']
+
+def outputText(monthChoice, cityList, stateList):
+
+    baseString = "The cities that are warmest in %s are: " % (monthChoice)
+
+    cityStateTups = zip(cityList, stateList)
+
+    def stringPairFromTup(tup):
+        return "%s, %s" % (tup[0],tup[1])
+
+    stringPairList = map(stringPairFromTup, cityStateTups)
+
+    stringPairList[-1] = "and " + stringPairList[-1] + "."
+
+    stringPairOut = "; ".join(stringPairList)
+
+    textString = baseString + stringPairOut
+
+    return textString
+
+print outputText(monthChoice, df['city'].values.tolist(), df['state'].values.tolist())
